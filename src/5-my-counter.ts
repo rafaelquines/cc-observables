@@ -1,3 +1,4 @@
+import { Util } from './util';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/observable/fromEvent';
@@ -12,18 +13,18 @@ class MyCounter {
     evenEmitter: any;
     primeEmitter: any;
     counter: number = 0;
-    interval: number = -1;
+    interval: any;
     constructor(private limit: number) {
         this.oddObserve = Observable.create((observer: any) => {
-            console.log('construiu odd');
+            Util.log('construiu odd');
             this.oddEmitter = observer;
         });
         this.evenObserve = Observable.create((observer: any) => {
-            console.log('construiu even');
+            Util.log('construiu even');
             this.evenEmitter = observer;
         });
         this.primeObserve = Observable.create((observer: any) => {
-            console.log('construiu orime');
+            Util.log('construiu orime');
             this.primeEmitter = observer;
         });
     }
@@ -31,12 +32,11 @@ class MyCounter {
     start() {
         this.interval = setInterval(() => {
             this.counter++;
-            // console.log("COUNTER: ", this.counter);
-            if (this.counter % 2 == 0) {
+            if (this.counter % 2 === 0) {
                 this.evenEmitter.next(this.counter);
             }
 
-            if (this.counter % 2 != 0) {
+            if (this.counter % 2 !== 0) {
                 this.oddEmitter.next(this.counter);
             }
 
@@ -68,9 +68,9 @@ class MyCounter {
 
     isPrime(n: number) {
         if (n < 2) return false;
-        var q = Math.floor(Math.sqrt(n));
-        for (var i = 2; i <= q; i++) {
-            if (n % i == 0) {
+        const q = Math.floor(Math.sqrt(n));
+        for (let i = 2; i <= q; i++) {
+            if (n % i === 0) {
                 return false;
             }
         }
@@ -78,24 +78,24 @@ class MyCounter {
     }
 }
 
-var myCounter = new MyCounter(20);
+const myCounter = new MyCounter(20);
 
 myCounter.onEven().subscribe(
-    (v) => console.log("Par: " + v),
-    (err) => console.log('Erro: ', err),
-    () => console.log('Terminou par')
+    (v) => Util.log('Par: ' + v),
+    (err) => Util.log('Erro: ' + err),
+    () => Util.log('Terminou par'),
 );
 
 myCounter.onOdd().subscribe(
-    (v) => console.log("Ímpar: " + v),
-    (err) => console.log('Erro: ', err),
-    () => console.log('Terminou ímpar')
+    (v) => Util.log('Ímpar: ' + v),
+    (err) => Util.log('Erro: ' + err),
+    () => Util.log('Terminou ímpar'),
 );
 
 myCounter.onPrime().subscribe(
-    (v) => console.log("Primo: " + v),
-    (err) => console.log('Erro: ', err),
-    () => console.log('Terminou primo')
+    (v) => Util.log('Primo: ' + v),
+    (err) => Util.log('Erro: ' + err),
+    () => Util.log('Terminou primo'),
 );
 
 myCounter.start();

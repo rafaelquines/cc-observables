@@ -1,4 +1,4 @@
-// import * as x from 'node-angular-http-client';
+import { Util } from './util';
 import 'zone.js';
 import 'reflect-metadata';
 import { HttpClient, createHttpClient } from 'node-angular-http-client';
@@ -11,6 +11,6 @@ const makeRequest = () => {
 };
 
 makeRequest().subscribe((res) => {
-    console.log(res);
-    console.log('Status: ', res.status, res.statusText);
+    Util.log(res);
+    Util.log('Status: ' + res.status + ' ' + res.statusText);
 });

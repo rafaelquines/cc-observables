@@ -1,3 +1,4 @@
+import { Util } from './util';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/timer';
 import 'rxjs/add/operator/timestamp';
@@ -8,4 +9,4 @@ const source = Observable.timer(
     .timestamp();
 
 const subscription = source.subscribe(
-    x => console.log(x));
+    x => Util.log(x));

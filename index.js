@@ -1,2 +1,10 @@
 require('ts-node/register');
-require('./src/exemplo1');
+// require('./src/0-promise');
+// require('./src/1-range');
+// require('./src/2-timer');
+// require('./src/3-from-array');
+// require('./src/4-observer');
+require('./src/5-my-counter');
+// require('./src/http-angular');
+// require('./src/http-promise');
+// require('./src/0.1-promise-all');

@@ -1,3 +1,4 @@
+import { Util } from './util';
 import * as rp from 'request-promise';
 
 function makeRequest() {
@@ -7,5 +8,5 @@ function makeRequest() {
 makeRequest()
 .then((data) => {
     // tslint:disable-next-line:no-console
-    console.log('Clientes lenght: ', data.length);
+    Util.log('Clientes lenght: ' + data.length);
 });

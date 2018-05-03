@@ -1,10 +1,9 @@
+import { Util } from './util';
 import {Observable} from 'rxjs/Observable';
 
 // var arr = ['a', 'b', 'c'];
 
-let data: Observable<number>;
-
-data = new Observable(observer => {
+const data = new Observable(observer => {
     setTimeout(() => {
         observer.next(42);
     }, 1000);
@@ -20,17 +19,17 @@ data = new Observable(observer => {
     setTimeout(() => {
         observer.complete();
     }, 3000);
-    console.log('Observable iniciado');
+    Util.log('Observable iniciado');
 });
 
 data.subscribe(
     value => {
-        console.log('Recebi: ' + value);
+        Util.log('Recebi: ' + value);
     },
     error => {
-        console.log('ERROR: ', error);
+        Util.log('ERROR: ' + error);
     },
     () => {
-        console.log('FIM');
-    }
+        Util.log('FIM');
+    },
 );
