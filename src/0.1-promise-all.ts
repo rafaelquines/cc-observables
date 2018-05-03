@@ -14,6 +14,7 @@ const promise2 = new Promise((resolve, reject) => {
 });
 Util.log('AQUI');
 Promise.all([promise1, promise2])
-    .then(() => {
+    .then((data) => {
+        console.log(data);
         Util.log('Terminou');
     });

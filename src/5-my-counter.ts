@@ -78,7 +78,7 @@ class MyCounter {
     }
 }
 
-const myCounter = new MyCounter(20);
+const myCounter = new MyCounter(10);
 
 myCounter.onEven().subscribe(
     (v) => Util.log('Par: ' + v),
