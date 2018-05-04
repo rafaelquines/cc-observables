@@ -1,56 +1,33 @@
 import { Util } from './util';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/from';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/observable/fromEventPattern';
-import 'rxjs/add/observable/fromPromise';
+import {filter} from 'rxjs/operators';
+import "rxjs/add/operator/publish";
 
 class MyCounter {
     oddObserve: Observable<any>;
     evenObserve: Observable<any>;
     primeObserve: Observable<any>;
-    oddEmitter: any;
-    evenEmitter: any;
-    primeEmitter: any;
+    observe: Observable<any>;
+    emitter: any;
     counter: number = 0;
     interval: any;
     constructor(private limit: number) {
-        this.oddObserve = Observable.create((observer: any) => {
-            Util.log('construiu odd');
-            this.oddEmitter = observer;
-        });
-        this.evenObserve = Observable.create((observer: any) => {
-            Util.log('construiu even');
-            this.evenEmitter = observer;
-        });
-        this.primeObserve = Observable.create((observer: any) => {
-            Util.log('construiu orime');
-            this.primeEmitter = observer;
-        });
+        this.observe = Observable.create((observer: any) => {
+            this.emitter = observer;
+        }).publish().refCount();
+        this.oddObserve = this.observe.pipe(filter(num => num % 2 !== 0));
+        this.evenObserve = this.observe.pipe(filter(num => num % 2 === 0));
+        this.primeObserve = this.observe.pipe(filter(this.isPrime));
     }
 
     start() {
         this.interval = setInterval(() => {
             this.counter++;
-            if (this.counter % 2 === 0) {
-                this.evenEmitter.next(this.counter);
-            }
-
-            if (this.counter % 2 !== 0) {
-                this.oddEmitter.next(this.counter);
-            }
-
-            if (this.isPrime(this.counter)) {
-                this.primeEmitter.next(this.counter);
-            }
-
-            if (this.counter >= this.limit) {
-                this.oddEmitter.complete();
-                this.evenEmitter.complete();
-                this.primeEmitter.complete();
+            this.emitter.next(this.counter);
+            if (this.counter >= this.limit){
+                this.emitter.complete();
                 clearInterval(this.interval);
             }
-
         }, 1000);
     }
 
